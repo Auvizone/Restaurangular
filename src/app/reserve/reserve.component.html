@@ -1,0 +1,71 @@
+<div *ngIf="!isScheduleOk">
+<form [formGroup]="reservationForm" (submit)="saveReservation()">
+  <mat-form-field>
+    <mat-label>Choisir une date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker startView="year" [startAt]="date"></mat-datepicker>
+  </mat-form-field>
+
+  <h4>Choisir une heure</h4>
+  <mat-form-field>
+    <mat-label>Choisir votre heure</mat-label>
+    <mat-select formControlName="time">
+      <mat-option *ngFor="let timeOption of timeOptions" [value]="timeOption">
+        {{ timeOption}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <h4>Choisir le nombre de personnes</h4>
+  <mat-form-field>
+    <mat-label>Choisir le nombre de personnes</mat-label>
+    <mat-select formControlName="people">
+      <mat-option *ngFor="let peopleOption of peopleOptions" [value]="peopleOption">
+        {{ peopleOption }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-button type="submit">Confirmer l'horaire</button>
+  
+
+</form>
+
+</div>
+
+{{ reservationForm.value | json }}
+
+<div *ngIf="isScheduleOk">
+
+<form #f="ngForm" (submit)="finalizeReservation(f.value)">
+    <mat-form-field>
+        <input matInput type="text" name="firstName" [(ngModel)]="client.firstName" placeholder="Prenom">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput type="text" name="lastName" [(ngModel)]="client.lastName" placeholder="Nom">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput type="text" name="email" [(ngModel)]="client.email" placeholder="Email">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput type="text" name="phone" [(ngModel)]="client.phone" placeholder="Telephone">
+    </mat-form-field>
+    <button mat-button type="submit">Réserver</button>
+</form>
+
+{{ f.controls.firstName?.value }}
+{{ f.controls.lastName?.value }}
+{{ f.controls.email?.value }}
+{{ f.controls.phone?.value }}
+
+</div>
+<!-- <form [formGroup]="reservationForm">
+    <input type="date" formControlName="date">
+    <select formControlName="time">
+        <option *ngFor="let timeOption of timeOptions">{{ timeOption }}</option>
+    </select>
+    <select formControlName="people">
+        <option *ngFor="let peopleOption of peopleOptions">{{ peopleOption }}</option>
+    </select>
+</form>
+{{ reservationForm.value | json }} -->
